@@ -1,0 +1,1 @@
+include ':app', ':walmart-android-sdk-1.0.5', ':jackson-core-2.9.6-javadoc', ':json-simple-1.1.1'
