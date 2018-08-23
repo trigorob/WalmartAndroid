@@ -1,7 +1,8 @@
 package robt.walmartandroid;
 
-import org.json.JSONObject;
 import org.junit.Test;
+
+import javax.json.JsonObject;
 
 import static org.junit.Assert.assertTrue;
 
@@ -12,8 +13,7 @@ import static org.junit.Assert.assertTrue;
 public class WalmartAPIHandlerTests {
     @Test
     public void TestGetRESTAPICategories() throws Exception {
-        WalmartAPIHandler wmAPIH = new WalmartAPIHandler();
-        JSONObject output = wmAPIH.getRESTAPICategories();
+        JsonObject output = WalmartAPIHandler.getJSONObjCategories();
 
         // Check:
         assertTrue(output != null);

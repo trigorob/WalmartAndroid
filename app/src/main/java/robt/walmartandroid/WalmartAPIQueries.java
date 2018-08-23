@@ -33,7 +33,7 @@ public class WalmartAPIQueries {
      * QUERY: Returns ALL categories (including all subcategories)
      * @return Category query in JSON format:
      */
-    public static String getCategoryQueryJSON() {
+    public static String getCategoryQuery() {
         return URLBASE + "taxonomy?apiKey=" + MYAPIKEY +"&format=json";
     }
 
@@ -143,12 +143,13 @@ public class WalmartAPIQueries {
 
     /**
      * QUERY: Returns ALL possible Products
-     * This overloaded version will view a segment of all possible products, given its page ID (maxID)
+     * (Will also be returned paginated by default, at the maximum 1000 items per page.
+     * This overloaded version will view a given segment of all possible products, given its page ID (maxID))
      * @param maxID - page ID: identifies which segment (page) from overall search query
      *                these items are from
      * @return Items query
      */
-    public static String getAllPossibleItemsQuery(int maxID) {
+    public static String getAllPossibleItemsQuery(String maxID) {
         return getAllPossibleItemsQuery()+"&maxId="+String.valueOf(maxID);
     }
 

@@ -1,14 +1,12 @@
 package robt.walmartandroid;
 
-import java.net.URL;
-
 /**
  * Created by ChampionRobert on 2018-08-22.
  */
 
 /**
  * This class holds details for Walmart Products.
- * Instances are meant to he held within WalmartProduct instances
+ * Instances are meant to be held within WalmartProduct instances
  */
 public class WalmartProductDetails {
 
@@ -20,9 +18,9 @@ public class WalmartProductDetails {
     private String shortDescription;
     private String longDescription;
     private String brandName;
-    private URL thumbnailImage;
-    private URL mediumImage;
-    private URL largeImage;
+    private String thumbnailImage;
+    private String mediumImage;
+    private String largeImage;
 
     public void setItemID(String itemID) {
         this.itemID = itemID;
@@ -56,15 +54,15 @@ public class WalmartProductDetails {
         this.brandName = brandName;
     }
 
-    public void setThumbnailImage(URL thumbnailImage) {
+    public void setThumbnailImage(String thumbnailImage) {
         this.thumbnailImage = thumbnailImage;
     }
 
-    public void setMediumImage(URL mediumImage) {
+    public void setMediumImage(String mediumImage) {
         this.mediumImage = mediumImage;
     }
 
-    public void setLargeImage(URL largeImage) {
+    public void setLargeImage(String largeImage) {
         this.largeImage = largeImage;
     }
 
@@ -100,15 +98,15 @@ public class WalmartProductDetails {
         return brandName;
     }
 
-    public URL getThumbnailImage() {
+    public String getThumbnailImageURL() {
         return thumbnailImage;
     }
 
-    public URL getMediumImage() {
+    public String getMediumImageURL() {
         return mediumImage;
     }
 
-    public URL getLargeImage() {
+    public String getLargeImageURL() {
         return largeImage;
     }
 
@@ -125,9 +123,9 @@ public class WalmartProductDetails {
                                  String shortDescription,
                                  String longDescription,
                                  String brandName,
-                                 URL thumbnailImage,
-                                 URL mediumImage,
-                                 URL largeImage) {
+                                 String thumbnailImage,
+                                 String mediumImage,
+                                 String largeImage) {
         this.itemID = itemID;
         this.parentItemId = parentItemId;
         this.name = name;

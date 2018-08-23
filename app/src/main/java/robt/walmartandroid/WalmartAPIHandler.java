@@ -1,19 +1,7 @@
 package robt.walmartandroid;
 
 
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
-
+import javax.json.JsonObject;
 
 
 /**
@@ -24,105 +12,112 @@ import java.util.List;
 /**
  * This class contains methods for handling the REST API requests
  */
-public class WalmartAPIHandler {
+public class WalmartAPIHandler extends APIHandler{
 
-    // - MAKE REST API CALL
-    // - GET DATA
-    // - PROC INPUT DATA
-    // - SHOW UP ON VIEW
+    /**
+     * Returns ALL Walmart categories (including all subcategories) as JsonObject
+     * @return JsonObject with all Walmart Categories
+     */
+    public static JsonObject getJSONObjCategories() {
+        return processRESTAPIorNull(WalmartAPIQueries.getCategoryQuery());
+    }
 
-
-    // public List<WalmartCategory> getCategories() {
-    public JSONObject getRESTAPICategories() {
-
-        String query = WalmartAPIQueries.getCategoryQueryJSON();
-
-        try {
-            // SECTION: process REST API call
-            URL url = new URL(query);
-            HttpURLConnection c = (HttpURLConnection) url.openConnection();
-            c.setRequestMethod("GET");
-
-            c.setConnectTimeout(10000); // 10sec Connection Timeout
-            c.setReadTimeout(10000); // 10sec Read Timeout
-
-            c.connect();
-
-            int codeCheck = c.getResponseCode();
-            if(codeCheck != 200) throw new RuntimeException("Http Response Code: " +codeCheck);
-
-
-            // SECTION: Read output from REST API call
-            InputStreamReader isr = new InputStreamReader(c.getInputStream(), Charset.forName("UTF-8"));
-            BufferedReader br = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
-
-
- /*           int cp;
-            while ((cp = br.read()) != -1) {
-                sb.append((char) cp);
-            }
-*/
-
-            ArrayList<String> strout = new ArrayList<String>();
-            String line;
-            while ((line = br.readLine()) != null) {
-                System.out.println(line);
-                sb.append(line);
-            }
-            String JSONString = sb.toString();
+    /**
+     * Returns ALL Products under a given Walmart category (code)
+     * Will also be returned paginated, at the maximum 1000 items per page.
+     * This query also returns the Products as Page 1
+     * @param categoryCode - Category id of the desired category.
+     *                       **NOTE: This should match the id field from Taxonomy API**
+     * @return JsonObject with all Items under Category
+     */
+    public static JsonObject getJSONObjAllItemsByCategory(String categoryCode) {
+        return processRESTAPIorNull(
+                WalmartAPIQueries.getAllPaginatedItemsQueryByCategory(categoryCode));
+    }
 
 
 
+    /**
+     * Returns a set of Products, paginated, under a given category (code),
+     *    with a given number of items per page.
+     * This also returns the Products as Page 1
+     * @param categoryCode - Category id of the desired category.
+     *                       **NOTE: This should match the id field from Taxonomy API**
+     *
+     * @param itemsPerPage - # of items per page
+     * @return Items as JsonObject
+     */
+    public static JsonObject getJSONObjItemsPageByCategory(String categoryCode, int itemsPerPage) {
+        return processRESTAPIorNull(
+                WalmartAPIQueries.getItemsPageQueryByCategory(categoryCode, itemsPerPage));
+    }
+
+    /**
+     * Returns a segment of all Products, paginated, under a given category (code),
+     *    with a given number of items per page.
+     * This segment of all products includes an identifier (maxID).
+     * @param categoryCode - Category id of the desired category.
+     *                       **NOTE: This should match the id field from Taxonomy API**
+     *
+     * @param itemsPerPage - # of items per page
+     *
+     * @param maxID - page ID: identifies which segment (page) from overall search query
+     *                these items are from
+     * @return Items as JsonObject
+     */
+    public static JsonObject getJSONObjItemsPageByCategory(String categoryCode, int itemsPerPage, String maxID) {
+        return processRESTAPIorNull(
+                WalmartAPIQueries.getItemsPageQueryByCategory(categoryCode, itemsPerPage, maxID));
+    }
 
 
+    /**
+     * Returns a single Product - including all its possible info
+     * @param productCode - Product ID
+     * @return Full Product as JsonObject
+     *
+     * Key Product Info the Walmart API should return:
+     *  - Name
+     *  - MSRP/Sale Price
+     *  - Short/Long Descriptions
+     *  - Product Image URLS: Thumbnail, Medium, Large
+     *  and more
+     */
+    public static JsonObject getJSONObjItem(String productCode) {
+        return processRESTAPIorNull(
+                WalmartAPIQueries.getItemQuery(productCode));
+    }
 
-            c.disconnect();
 
-            // SECTION: Create JSON Object
-            try {
-                StringReader reader = new StringReader("[]");
+    /**
+     * Returns ALL possible Products
+     * (Will also be returned paginated by default, at the maximum 1000 items per page.
+     * Hence this query also returns the Products as Page 1)
+     * @return Items as JsonObject
+     */
+    public static JsonObject getJSONObjAllPossibleItems() {
+        return processRESTAPIorNull(
+                WalmartAPIQueries.getAllPossibleItemsQuery());
+    }
 
-                // parser = Json.createParser(reader);
-
-
-            }
-            catch (Exception e) {
-                // Print/Log code for JSON object creation
-            }
-
-        }
-        catch (MalformedURLException e) {
-            // handle invalid URL
-
-        }
-        catch (IOException e) {
-            // handle anything else while connecting
-
-        }
-
-        catch (RuntimeException e) {
-            // This is for failing response codes to REST API request.
-            // Plan: return response to UI, prompting message: "server unavailable"
-        }
-
-        // if code reaches here, JSON object creation failed.
-        return null;
+    /**
+     * Returns ALL possible Products
+     * (Will also be returned paginated by default, at the maximum 1000 items per page.
+     * This overloaded version will view a given segment of all possible products, given its page ID (maxID))
+     * @param maxID - page ID: identifies which segment (page) from overall search query
+     *                these items are from
+     * @return Items as JsonObject
+     */
+    public static JsonObject getJSONObjAllPossibleItems(String maxID) {
+        return processRESTAPIorNull(
+                WalmartAPIQueries.getAllPossibleItemsQuery(maxID));
     }
 
 
 
 
-    public void parseJSONCategories(JSONObject inp) {
-
-    }
 
 
-
-
-    public List<WalmartProduct> getProductsFromCategory(WalmartCategory inp) {
-        return null;
-    }
 
 
 }

@@ -1,0 +1,4 @@
+configurations.maybeCreate("default")
+artifacts.add("default", file('javax.json-1.0.jar'))
+dependencies {
+}
