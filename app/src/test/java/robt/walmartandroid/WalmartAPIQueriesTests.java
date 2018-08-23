@@ -61,7 +61,7 @@ public class WalmartAPIQueriesTests {
         // - all connections should retrieve respective JSONObjects
         for (HttpURLConnection h : ConnectionsList)
         {
-            JsonObject j = APIHandler.makeJSONfromRESTAPIConnect(h);
+            JsonObject j = APIHandler.createJSONfromRESTAPIConnect(h);
             assertTrue(j != null);
         }
 

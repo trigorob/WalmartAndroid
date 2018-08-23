@@ -13,13 +13,21 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
+
+
+/**
+ * This class contains the key REST API handling processes
+ * used for this app.
+ */
 public class APIHandler {
 
 
     protected static final int CONNECTIONTIMEOUT_SECS = 20000; // 20sec Connection Timeout
     protected static final int APIREADTIMEOUT_SECS = 20000;    // 20sec Read Timeout
 
-    //List of notable Status Codes
+    /**List of notable Status Codes when attempting
+     * to connect to the Walmart API:
+     */
     protected static final int STATUS_OK = 200;
     protected static final int STATUS_BADREQUEST = 200;
     protected static final int STATUS_UNAUTHORIZED = 401;
@@ -54,7 +62,7 @@ public class APIHandler {
 
             // SECTION: Read JSON Response from REST API call
             try {
-                return makeJSONfromRESTAPIConnect(c);
+                return createJSONfromRESTAPIConnect(c);
             }
             catch (Exception e) {
                 // TODO Print/Log code for JSON object creation attempt
@@ -70,6 +78,9 @@ public class APIHandler {
         }
         catch (IOException e) {
             // TODO handle any errors while connecting
+            // TODO prompt UI display about any connection issues
+            //    when attempting to connect
+
             String note = e.getMessage();
         }
 
@@ -100,11 +111,14 @@ public class APIHandler {
      */
     public static HttpURLConnection connectRESTAPIQuery(String query) throws MalformedURLException, ProtocolException, IOException
     {
+        // Setup connections
         URL url = new URL(query);
         HttpURLConnection connection  = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setConnectTimeout(CONNECTIONTIMEOUT_SECS); // 20sec Connection Timeout
         connection.setReadTimeout(APIREADTIMEOUT_SECS); // 20sec Read Timeout
+
+        // Connect!
         connection.connect();
         return connection;
     }
@@ -119,8 +133,9 @@ public class APIHandler {
      * @param conn - Connection to REST API Results
      * @return result as JsonObject
      */
-    public static JsonObject makeJSONfromRESTAPIConnect(HttpURLConnection conn) throws IOException
+    public static JsonObject createJSONfromRESTAPIConnect(HttpURLConnection conn) throws IOException
     {
+        // SETUP readers
         JsonObject mainObject; // output object;
         InputStreamReader isr = new InputStreamReader(conn.getInputStream(), Charset.forName("UTF-8"));
         BufferedReader br = new BufferedReader(isr);
