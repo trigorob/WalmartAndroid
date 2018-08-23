@@ -3,15 +3,15 @@ Walmart Product App on Android
 
 DESIGN DOCUMENTATION:
 
-Architectural Pattern: MVP 
+Architectural Pattern: MVC 
 Procedural outline generally goes as follows:
 - user prompt to load whichever info he/she chooses
 - REST query to Walmart API
 - receive & parse results
-- organize data using given classes (create the displaying data MODEL)
+- organize data using given classes (CONTROLLER creating the displaying data MODEL)
 - display data visually (User's VIEW)
 
-This general procedure more closely fits an MVP pattern, thus defining the development approach of this app.
+This general procedure more closely fits an MVC pattern, thus defining the development approach of this app.
 
 
 
