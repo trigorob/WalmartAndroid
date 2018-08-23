@@ -1,12 +1,12 @@
 package robt.walmartandroid;
 
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -33,7 +33,7 @@ public class WalmartAPIHandler {
 
 
     // public List<WalmartCategory> getCategories() {
-    public JSONArray getRESTAPICategories() {
+    public JSONObject getRESTAPICategories() {
 
         String query = WalmartAPIQueries.getCategoryQueryJSON();
 
@@ -43,8 +43,8 @@ public class WalmartAPIHandler {
             HttpURLConnection c = (HttpURLConnection) url.openConnection();
             c.setRequestMethod("GET");
 
-            c.setConnectTimeout(5000); // 5sec Connection Timeout
-            c.setReadTimeout(5000); // 5sec Read Timeout
+            c.setConnectTimeout(10000); // 10sec Connection Timeout
+            c.setReadTimeout(10000); // 10sec Read Timeout
 
             c.connect();
 
@@ -81,9 +81,11 @@ public class WalmartAPIHandler {
 
             // SECTION: Create JSON Object
             try {
-           //     JsonReader js = new JsonReader(in);
-           //    return new JSONArray("categories");
-            //    return new JSONArray(JSONString.substring(JSONString.indexOf("{"), JSONString.lastIndexOf("}") + 1));
+                StringReader reader = new StringReader("[]");
+
+                // parser = Json.createParser(reader);
+
+
             }
             catch (Exception e) {
                 // Print/Log code for JSON object creation

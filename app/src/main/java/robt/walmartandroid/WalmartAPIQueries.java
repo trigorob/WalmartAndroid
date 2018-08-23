@@ -7,8 +7,7 @@ package robt.walmartandroid;
 
 /**
  * This class holds the Collection of Walmart API queries
- * They can be all accessed without creating an instance of this class.
- * Most query strings are returned as get-methods for statelessness (via Static modifier)
+ * They can be all accessed without creating an instance of this class. (a la Static modifier)
  *  (this class has no modifiable fields)
  */
 public class WalmartAPIQueries {
@@ -16,8 +15,8 @@ public class WalmartAPIQueries {
 
     /** Personal API Key from my account:
      */
-    private static final String MYAPIKEY = "tcefd9shdkvmqnq2b6657ra8";
-    private static final String URLBASE = "http://api.walmartlabs.com/v1/";
+    protected static final String MYAPIKEY = "tcefd9shdkvmqnq2b6657ra8";
+    protected static final String URLBASE = "http://api.walmartlabs.com/v1/";
 
     /** ======== ======== ======== ======== ======== ========  */
 

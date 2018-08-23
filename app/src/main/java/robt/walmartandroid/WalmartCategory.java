@@ -10,38 +10,29 @@ import java.util.List;
 
 
 /**
- * This class outlines the Product Categories from the Walmart API
+ * This class outlines the Product Categories from the Walmart API.
+ * Future developers are free to derive from this class
 */
 public class WalmartCategory {
 
     // FIELDS:
-    private String m_id;
-    private String m_name;
-    private String m_categoryPath;
-    private List<WalmartCategory> m_children = new ArrayList<WalmartCategory>();
+    protected String Id;
+    protected String Name;
+    protected String CategoryPath;
+    protected List<WalmartCategory> m_children = new ArrayList<WalmartCategory>();
 
     // CONSTRUCTORS:
     public WalmartCategory(String id, String name) {
-        this.m_id = id;
-        this.m_name = name;
+        Id = id;
+        Name = name;
     }
-
-    public WalmartCategory(String id, String name, String path) {
-        this.m_id = id;
-        this.m_name = name;
-        this.m_categoryPath = path;
-    }
-
-    public WalmartCategory(String id, String name, List<WalmartCategory> children) {
-        this.m_id = id;
-        this.m_name = name;
-        m_children.addAll(children);
+    public WalmartCategory(String id, String name, List<WalmartCategory> m_children) {
+        Id = id;
+        Name = name;
+        this.m_children = m_children;
     }
 
     // PROPERTIES:
-    public String getID() {return  this.m_id;}
-    public String getName() {return this.m_name;}
-    public String getCatPath() {return this.m_categoryPath;}
-    private List<WalmartCategory> getChildren() {return m_children;}
+
 
 }
