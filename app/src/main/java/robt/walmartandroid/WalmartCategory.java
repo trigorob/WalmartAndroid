@@ -26,13 +26,22 @@ public class WalmartCategory {
         Id = id;
         Name = name;
     }
+    public WalmartCategory(String id, String name, String path) {
+        Id = id;
+        Name = name;
+        CategoryPath = path;
+    }
     public WalmartCategory(String id, String name, List<WalmartCategory> m_children) {
         Id = id;
         Name = name;
         this.m_children = m_children;
     }
 
+
     // PROPERTIES:
+    public void addChildren(List<WalmartCategory> children) {
+        this.m_children.addAll(children);
+    }
 
 
 }
